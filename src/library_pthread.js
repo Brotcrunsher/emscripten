@@ -889,6 +889,15 @@ var LibraryPThread = {
 #endif
   },
 
+#if ASSERTIONS
+  _emscripten_set_js_thread_name__sig: 'vp',
+  _emscripten_set_js_thread_name: function(name) {
+    if (ENVIRONMENT_IS_PTHREAD) {
+      globalThis.name = UTF8ToString(name);
+    }
+  },
+#endif
+
   __pthread_kill_js__deps: ['emscripten_main_browser_thread_id'],
   __pthread_kill_js: function(thread, signal) {
     if (signal === {{{ cDefine('SIGCANCEL') }}}) { // Used by pthread_cancel in musl
